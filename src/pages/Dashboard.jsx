@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 const lessons = [
     { id: 1, title: "Introduction", completed: true },
@@ -9,6 +9,8 @@ const lessons = [
 ];
 
 function Dashboard() {
+    const [activeLesson, setActiveLesson] = useState(null);
+
     return (
         <div style={{ display: "flex", height: "100vh"}}>
             {/* Left column */}
@@ -59,9 +61,10 @@ function Dashboard() {
                                     alignItems: "center",
                                     color: lesson.completed ? "white" : "#555",
                                     fontWeight: "bold",
-                                    cursor: "pointer"
+                                    cursor: "pointer",
+                                    border: activeLesson?.id === lesson.id ? "3px solid #2196f3" : "none"
                                 }}
-                                onClick={() => alert(`Entrando a la lección: ${lesson.title}`)}
+                                onClick={() => setActiveLesson(lesson)}
                                 >
                                 {lesson.id}
                             </div>
@@ -73,6 +76,14 @@ function Dashboard() {
                         </React.Fragment>
                     ))}
                 </div>
+
+                {/* Content of the active lesson */}
+                {activeLesson && (
+                    <div style={{ marginTop: "2rem", padding: "1rem", border: "1px solid #ccc", borderRadius: "5px"}}>
+                        <h3>{activeLesson.title}</h3>
+                        <p>Here will be the content of the lesson.</p>
+                        </div>
+                )}
             </div>
 
             {/* Right column */}
